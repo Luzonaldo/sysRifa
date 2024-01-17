@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 import com.devcaotics.sysRifa.model.entities.Apostador;
 import com.devcaotics.sysRifa.model.repositories.RepositoryService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/apostador")
 public class ApostadorController {
 
+	
 	@PostMapping
 	public String create(@RequestBody Apostador a) {
 		

@@ -3,7 +3,7 @@ package com.devcaotics.sysRifa.model.repositories;
 import java.sql.SQLException;
 import java.util.List;
 
-
+import com.devcaotics.sysRifa.model.entities.Aposta;
 import com.devcaotics.sysRifa.model.entities.Apostador;
 import com.devcaotics.sysRifa.model.entities.Rifa;
 
@@ -59,6 +59,36 @@ public class RepositoryService {
 		public Rifa readRifa(int codigo) throws SQLException {
 			
 			return this.repRifa.read(codigo);
+			
+		}
+		
+		public List<Rifa> readAllRifas() throws SQLException{
+			
+			return repRifa.readAll();
+			
+		}
+		
+		public void addAposta(Rifa rifa, Aposta aposta) throws SQLException {
+			
+			((RifaRepository)this.repRifa).addAposta(rifa, aposta);
+			
+		}
+		
+		public void pagarAposta(Aposta a) throws SQLException {
+			
+			((RifaRepository)this.repRifa).pagarAposta(a);
+			
+		}
+		
+		public void realizarSorteio(Rifa rifa) throws SQLException {
+			
+			((RifaRepository)this.repRifa).realizarSorteio(rifa);
+			
+		}
+		
+		public List<Rifa> filterRifaByStatus(String status) throws SQLException{
+			
+			return ((RifaRepository)this.repRifa).FilterByStatus(status);
 			
 		}
 
