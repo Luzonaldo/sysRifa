@@ -21,7 +21,7 @@ public class Rifa {
 		this.dataCriacao = System.currentTimeMillis();
 		this.apostas = new ArrayList<>();
 		this.vencedores = new ArrayList<>();
-		this.status = "aberto";
+		this.status = "ABERTO";
 	}
 
 	public int getCodigo() {
@@ -63,6 +63,10 @@ public class Rifa {
 	public void setQuantNumeros(int quantNumeros) {
 		this.quantNumeros = quantNumeros;
 	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public List<Premio> getPremios() {
 		return premios;
@@ -83,6 +87,7 @@ public class Rifa {
 	public String getStatus() {
 		return status;
 	}
+	
 
 	/*
 	 * Parte dos comportamentos
