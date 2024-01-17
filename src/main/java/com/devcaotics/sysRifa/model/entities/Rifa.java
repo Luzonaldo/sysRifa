@@ -103,11 +103,13 @@ public class Rifa {
 		for(int i = 0; i< this.apostas.size(); i++) {
 			
 			if(this.apostas.get(i).getNumero()>aposta.getNumero()) {
-				this.apostas.set(i, aposta);
+				this.apostas.add(i, aposta);
 				
 				if(this.apostas.size() == quantNumeros) {
 					this.status = "fechado";
 				}
+				
+				break;
 				
 			}
 			

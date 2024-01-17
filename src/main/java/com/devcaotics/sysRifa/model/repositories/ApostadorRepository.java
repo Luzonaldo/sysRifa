@@ -75,7 +75,7 @@ public final class ApostadorRepository implements Repository<Apostador>{
 			a.setCodigo(result.getInt("codigo_apostador"));
 			a.setNome(result.getString("nome"));
 			a.setLocalidade(result.getString("localidade"));
-			a.setWhatsapp(result.getString("localidade"));
+			a.setWhatsapp(result.getString("whatsapp"));
 			a.setEmail(result.getString("email"));
 			
 			return a;
@@ -120,7 +120,7 @@ public final class ApostadorRepository implements Repository<Apostador>{
 			a.setCodigo(result.getInt("codigo_apostador"));
 			a.setNome(result.getString("nome"));
 			a.setLocalidade(result.getString("localidade"));
-			a.setWhatsapp(result.getString("localidade"));
+			a.setWhatsapp(result.getString("whatsapp"));
 			a.setEmail(result.getString("email"));
 			
 			apostadores.add(a);

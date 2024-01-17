@@ -5,13 +5,13 @@ const urlAPI = divTabela.getAttribute("tabela")
 
 const xmlHttp = new XMLHttpRequest()
 
-xmlHttp.onreadystatechange = function(){
-	
+xmlHttp.onreadystatechange = function () {
+
 	if (this.readyState == 4 && this.status == 200) {
-       // Typical action to be performed when the document is ready:
-		
+		// Typical action to be performed when the document is ready:
+
 		const resposta = JSON.parse(xmlHttp.responseText)
-	
+
 		let table = document.createElement("table")
 		table.classList.add("table")
 		let tr = document.createElement("tr")
@@ -27,7 +27,7 @@ xmlHttp.onreadystatechange = function(){
 		th5.innerHTML = "e-mail"
 		let th6 = document.createElement("th")
 		th6.innerHTML = "operaçoes"
-		
+
 		tr.appendChild(th1)
 		tr.appendChild(th2)
 		tr.appendChild(th3)
@@ -35,9 +35,9 @@ xmlHttp.onreadystatechange = function(){
 		tr.appendChild(th5)
 		tr.appendChild(th6)
 		table.appendChild(tr)
-		
+
 		resposta.forEach((el) => {
-			
+
 			let trr = document.createElement("tr")
 			let thh1 = document.createElement("td")
 			thh1.innerHTML = el.codigo
@@ -50,15 +50,18 @@ xmlHttp.onreadystatechange = function(){
 			let thh5 = document.createElement("td")
 			thh5.innerHTML = el.email
 			let thh6 = document.createElement("td")
-			
+
 			let button = document.createElement("button")
-			button.addEventListener("click",prepararVisualizacao(el.codigo))
+			//button.addEventListener("click",prepararVisualizacao(el.codigo))
 			button.appendChild(document.createTextNode("visualizar"))
 			button.setAttribute("data-bs-toggle", "modal")
 			button.setAttribute("data-bs-target", "#modalVisual")
-			
+			button.setAttribute("class", "btn")
+			button.setAttribute("onclick", `prepararVisualizacao(${el.codigo})`)
+
+
 			thh6.appendChild(button)
-			
+
 			trr.appendChild(thh1)
 			trr.appendChild(thh2)
 			trr.appendChild(thh3)
@@ -67,51 +70,65 @@ xmlHttp.onreadystatechange = function(){
 			trr.appendChild(thh6)
 			table.appendChild(trr)
 		})
-		
+
 		divTabela.appendChild(table)
-	
+
 	}
-	
+
 }
 
-xmlHttp.open("Get",urlAPI)
+xmlHttp.open("Get", urlAPI)
 xmlHttp.send()
 
 document.querySelector("[submitter]")
-	.addEventListener("submit",function(event){
-		
+	.addEventListener("submit", function (event) {
+
 		event.preventDefault()
-		
+
 		const obj = {}
-		
+
 		const form = new FormData(document.forms[0])
-		
-		form.forEach( (value,key) => {
+
+		form.forEach((value, key) => {
 			obj[key] = value
 		})
-		
+
 		const response = fetch("http://localhost:8080/apostador",
 			{
-				method:"post",
-				headers:{
-					 'Accept': 'application/json',
-					 'Content-Type': 'application/json'
+				method: "post",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
 				},
-				body:JSON.stringify(obj)
+				body: JSON.stringify(obj)
 			}
 		)
-		
+
+		if (response.status === 500) {
+			alert("não foi possível realizar o cadastro")
+		}
+
 		location.reload()
-		
-	
-	})	
-	
-	function prepararVisualizacao(codigo){
-		
-		fetch("http://localhost:8080/apostador/"+codigo).then(response => response.json())
+
+
+	})
+
+const prepararVisualizacao = function (codigo) {
+
+	fetch("http://localhost:8080/apostador/" + codigo).then(response => {
+		if (response.status === 500) {
+			alert("Não foi possível recuperar os dados")
+		}
+		return response.json()
+	})
 		.then(json => {
 			document.getElementById("codigo").innerHTML = json.codigo
 			document.getElementById("nome").innerHTML = json.nome
+			document.getElementById("localidade").innerHTML = json.localidade
+			document.getElementById("whatsapp").innerHTML = json.whatsapp
+			document.getElementById("email").innerHTML = json.email
+		}).catch(erro => {
+
 		})
-		
-	}
+
+}
